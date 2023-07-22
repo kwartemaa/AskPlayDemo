@@ -45,19 +45,11 @@ import { defaultLanguages as languages } from "../locale";
             const code = splitMessage[splitMessage.length-1]
             // console.log(splitMessage)
             console.log(code)
-            const code1 = code.charAt(0);
-            const code2 = code.charAt(1)
-            const code3 = code.charAt(2)
-            const code4 = code.charAt(3)
-            const code5 = code.charAt(4)
-            const code6 = code.charAt(5)
-            await page.locator('//input[@data-name="codeValidation1"]').fill(code1)
-            await page.locator('//input[@data-name="codeValidation2"]').fill(code2)
-            await page.locator('//input[@data-name="codeValidation3"]').fill(code3)
-            await page.locator('//input[@data-name="codeValidation4"]').fill(code4)
-            await page.locator('//input[@data-name="codeValidation5"]').fill(code5)
-            await page.locator('//input[@data-name="codeValidation6"]').fill(code6)
-            await page.getByRole("button", {name: "Confirmer"}).click()
+            const codeElements = code.split("")
+            for(let counter = 0; counter<6; counter++){
+                await page.locator(`//input[@data-name="codeValidation${counter+1}"]`).fill(codeElements[counter])
+            }
+            await page.getByRole("button", {name: "Confirmer"}).click({force:true})
             await page.getByPlaceholder("Rue, No.*").fill("45678")
             await page.locator("input[name='city']").fill("Test City")
             await page.getByPlaceholder("Date de naissance* (JJ.MM.AAAA)").click()
